@@ -9,6 +9,7 @@ import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity
 import { BaseEntity } from "./BaseEntity";
 import { readConnection, writeConnection } from "./DatabaseModule";
 import { NotFoundException } from "@nestjs/common";
+import { CREATED_AT_COLUMN, PaginatedQuery } from "../constants";
 
 export abstract class AbstractRepo<T extends BaseEntity> {
   constructor(private readonly entityTarget: EntityTarget<T>) {}
@@ -66,23 +67,37 @@ export abstract class AbstractRepo<T extends BaseEntity> {
   }
 
   async findPaginated(
-    pageSize?: number,
-    currentPage?: number,
+    {page, size, filter, filterBy, order, orderBy}: PaginatedQuery,
     where?: FindOptionsWhere<T> | FindOptionsWhere<T>[],
-    order?: FindOptionsOrder<T>,
+    orderParam?: FindOptionsOrder<T>,
     relations?: FindOptionsRelations<T>
   ) {
-    pageSize = pageSize ? pageSize : 10;
-    currentPage = currentPage ? currentPage : 1;
-    const offset = (currentPage - 1) * pageSize;
+    size = size ? size : 10;
+    page = page ? page : 1;
+    const offset = (page - 1) * size;
+
+    const orderRelation = {
+      [orderBy ? orderBy : CREATED_AT_COLUMN]: order ? order : 'DESC' 
+    } as FindOptionsOrder<T>;
+
+    if (filter && filterBy) {
+      where = {
+        ...where,
+        [filterBy]: filter,
+      };
+    }
 
     const res = await readConnection
       .getRepository(this.entityTarget)
       .findAndCount({
-        take: pageSize,
+        take: size,
         skip: offset,
         where,
-        order,
+        order : {
+          ...orderParam,
+          ...orderRelation
+        
+        },
         relations,
       });
 
@@ -92,8 +107,8 @@ export abstract class AbstractRepo<T extends BaseEntity> {
       data,
       pagination: {
         total,
-        pageSize,
-        currentPage,
+        size,
+        page,
       },
     };
   }

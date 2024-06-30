@@ -12,9 +12,9 @@ import {
 import { UnitOfWork } from "./UnitOfWork";
 import { UNIT_OF_WORK_PROVIDER } from "../constants";
 import * as path from "path";
-import { Book } from "src/modules/book/models/book.model";
-import { Author } from "src/modules/author/models/author.model";
-import { BorrowedRecord } from "src/modules/borrowed-record/borrowed-record.model";
+import { Books } from "src/modules/book/models/book.model";
+import { Authors } from "src/modules/author/models/author.model";
+import { BorrowedRecords } from "src/modules/borrowed-record/borrowed-record.model";
 
 interface WriteConnection {
   readonly startTransaction: (
@@ -50,9 +50,9 @@ class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private readonly dataSource = new DataSource({
     type: "postgres",
     entities: [
-      Book,
-      Author,
-      BorrowedRecord
+      Books,
+      Authors,
+      BorrowedRecords
     ], //path.join(__dirname, "..", "**", "*.model.{js,ts}")
     migrations: [path.join(__dirname, "./migrations/*{.ts,.js}")],
     logging: Config.DATABASE_LOGGING,

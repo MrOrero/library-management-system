@@ -1,9 +1,9 @@
 import { BaseEntity } from 'src/libs/db/BaseEntity';
-import { Book } from 'src/modules/book/models/book.model';
+import { Books } from 'src/modules/book/models/book.model';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Author extends BaseEntity {
+export class Authors extends BaseEntity {
   @PrimaryColumn()
   id: string;
 
@@ -16,6 +16,6 @@ export class Author extends BaseEntity {
   @Column()
   bio: string;
 
-  @OneToMany(() => Book, book => book.author)
-  books: Book[];
+  @OneToMany(() => Books, book => book.author)
+  books?: Books[];
 }

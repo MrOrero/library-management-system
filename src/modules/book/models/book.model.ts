@@ -1,10 +1,10 @@
 import { BaseEntity } from 'src/libs/db/BaseEntity';
-import { Author } from 'src/modules/author/models/author.model';
-import { BorrowedRecord } from 'src/modules/borrowed-record/borrowed-record.model';
+import { Authors } from 'src/modules/author/models/author.model';
+import { BorrowedRecords } from 'src/modules/borrowed-record/borrowed-record.model';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Book extends BaseEntity {
+export class Books extends BaseEntity {
   @PrimaryColumn()
   id: string;
 
@@ -14,9 +14,9 @@ export class Book extends BaseEntity {
   @Column()
   authorId: string;
 
-  @ManyToOne(() => Author, author => author.books)
+  @ManyToOne(() => Authors, author => author.books)
   @JoinColumn({ name: 'authorId' })
-  author: Author;
+  author: Authors;
 
   @Column()
   publishedYear: string
@@ -27,6 +27,6 @@ export class Book extends BaseEntity {
   @Column()
   availableCopies: number
 
-  @OneToMany(() => BorrowedRecord, borrowedRecord => borrowedRecord.book)
-  borrowedRecords: BorrowedRecord[];
+  @OneToMany(() => BorrowedRecords, borrowedRecord => borrowedRecord.book)
+  borrowedRecords: BorrowedRecords[];
 }

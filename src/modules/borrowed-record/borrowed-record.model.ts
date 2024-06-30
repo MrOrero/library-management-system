@@ -1,19 +1,18 @@
 import { BaseEntity } from 'src/libs/db/BaseEntity';
-import { Author } from 'src/modules/author/models/author.model';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Book } from '../book/models/book.model';
+import { Books } from '../book/models/book.model';
 
 @Entity()
-export class BorrowedRecord extends BaseEntity {
+export class BorrowedRecords extends BaseEntity {
   @PrimaryColumn()
   id: string;
   
   @Column()
   bookId: string;
 
-  @ManyToOne(() => Book, book => book.borrowedRecords)
+  @ManyToOne(() => Books, book => book.borrowedRecords)
   @JoinColumn({ name: 'bookId' })
-  book: Book;
+  book: Books;
  
   @Column()
   borrower: string
