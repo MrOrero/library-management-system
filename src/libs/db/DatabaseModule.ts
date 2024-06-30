@@ -14,7 +14,7 @@ import { UNIT_OF_WORK_PROVIDER } from "../constants";
 import * as path from "path";
 import { Books } from "src/modules/book/models/book.model";
 import { Authors } from "src/modules/author/models/author.model";
-import { BorrowedRecords } from "src/modules/borrowed-record/borrowed-record.model";
+import { BorrowedRecords } from "src/modules/borrowed-record/models/borrowed-record.model";
 
 interface WriteConnection {
   readonly startTransaction: (

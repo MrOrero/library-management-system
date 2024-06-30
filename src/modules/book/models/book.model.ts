@@ -1,6 +1,6 @@
 import { BaseEntity } from 'src/libs/db/BaseEntity';
 import { Authors } from 'src/modules/author/models/author.model';
-import { BorrowedRecords } from 'src/modules/borrowed-record/borrowed-record.model';
+import { BorrowedRecords } from 'src/modules/borrowed-record/models/borrowed-record.model';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()

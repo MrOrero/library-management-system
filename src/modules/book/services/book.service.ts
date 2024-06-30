@@ -42,7 +42,6 @@ export class BookService {
   async getBookById(id: string) {
     try {
       const bookExists = await this.bookRepository.exists({ id });
-
       if (!bookExists) {
         throw new BadRequestException('Book Not Found');
       }

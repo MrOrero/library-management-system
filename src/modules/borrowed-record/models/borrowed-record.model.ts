@@ -1,6 +1,6 @@
 import { BaseEntity } from 'src/libs/db/BaseEntity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Books } from '../book/models/book.model';
+import { Books } from '../../book/models/book.model';
 
 @Entity()
 export class BorrowedRecords extends BaseEntity {
@@ -12,7 +12,7 @@ export class BorrowedRecords extends BaseEntity {
 
   @ManyToOne(() => Books, book => book.borrowedRecords)
   @JoinColumn({ name: 'bookId' })
-  book: Books;
+  book?: Books;
  
   @Column()
   borrower: string

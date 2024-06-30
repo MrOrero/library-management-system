@@ -47,7 +47,7 @@ export class AuthorService {
         throw new BadRequestException('Author Not Found');
       }
 
-      return this.authorRepository.findOne({ id });
+      return this.authorRepository.findOne({ id }, {books: true});
     } catch (error) {
       handleErrorCatch(error, 'Get Author By ID');
     }

@@ -1,4 +1,4 @@
-import { IsString, IsUUID, IsArray, IsNumber, IsPositive, ArrayMinSize, ArrayNotEmpty } from "class-validator";
+import { IsString, IsUUID, IsNumber, IsPositive } from "class-validator";
 import { IsValidYear } from "src/libs/validation/isValidYear";
 
 export class AddBookDto{
