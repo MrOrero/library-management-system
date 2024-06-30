@@ -1,4 +1,4 @@
-import { IsString, MinLength, IsEmail, IsPhoneNumber, IsNumber, IsEnum, IsNumberString, MaxLength, IsDateString } from "class-validator";
+import { IsString, MinLength, IsDateString } from "class-validator";
 
 export class CreateAuthorDto{
     @IsString()

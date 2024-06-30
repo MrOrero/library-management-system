@@ -16,17 +16,17 @@ export class Books extends BaseEntity {
 
   @ManyToOne(() => Authors, author => author.books)
   @JoinColumn({ name: 'authorId' })
-  author: Authors;
+  author?: Authors;
 
   @Column()
   publishedYear: string
 
-  @Column('text', { array: true })
-  genre: string[];
+  @Column()
+  genre: string;
 
   @Column()
   availableCopies: number
 
   @OneToMany(() => BorrowedRecords, borrowedRecord => borrowedRecord.book)
-  borrowedRecords: BorrowedRecords[];
+  borrowedRecords?: BorrowedRecords[];
 }

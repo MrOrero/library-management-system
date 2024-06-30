@@ -14,13 +14,6 @@ export class AuthorService {
 
   async createAuthor(dto: CreateAuthorDto) {
     try {
-      const authorExists = await this.authorRepository.exists({
-        name: dto.name,
-      });
-
-      if (authorExists) {
-        throw new BadRequestException('Author Already Exists');
-      }
       const authorOrError = AuthorDomain.create(dto);
 
       if (authorOrError.isFailure) {
@@ -34,7 +27,7 @@ export class AuthorService {
       const res = await this.authorRepository.save(author);
       return res;
     } catch (error) {
-      handleErrorCatch(error, 'Create Vendor');
+      handleErrorCatch(error, 'Create Author');
     }
   }
 
@@ -42,7 +35,7 @@ export class AuthorService {
     try {
       return await this.authorRepository.findPaginated(data);
     } catch (error) {
-      handleErrorCatch(error, 'Get All Paginated Vendors');
+      handleErrorCatch(error, 'Get All Paginated Authors');
     }
   }
 
@@ -56,7 +49,7 @@ export class AuthorService {
 
       return this.authorRepository.findOne({ id });
     } catch (error) {
-      handleErrorCatch(error, 'Get Vendor By ID');
+      handleErrorCatch(error, 'Get Author By ID');
     }
   }
 
