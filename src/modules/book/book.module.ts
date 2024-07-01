@@ -18,5 +18,6 @@ const infrastructure = [
   imports: [],
   controllers: [BookController],
   providers: [Logger, ...infrastructure, BookService],
+  exports: [BookService],
 })
 export class BookModule {}

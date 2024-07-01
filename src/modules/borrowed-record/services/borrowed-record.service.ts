@@ -6,14 +6,27 @@ import { AddBorrowedRecordDto } from '../dto/AddBorrowedRecord.dto';
 import { BorrowedRecordDomain } from '../domain/borrowed-record.domain';
 import { BorrowedRecordMapper } from '../mappers/BorrowedRecordMapper';
 import { UpdateBorrowedRecordDto } from '../dto/UpdateBorrowedRecord.dto';
+import { BookService } from 'src/modules/book/services/book.service';
+import { UpdateBookDto } from 'src/modules/book/dto/UpdateBook.dto';
 
 @Injectable()
 export class BorrowedRecordService {
   @Inject(InjectionTokens.BORROWED_RECORD_REPOSITORY)
   private readonly borrowedRecordRepository: BorrowedRecordRepository;
+  @Inject() private readonly bookService: BookService;
 
   async createBorrowedRecord(dto: AddBorrowedRecordDto) {
     try {
+      const book = await this.bookService.getBookById(dto.bookId);
+
+      if (!book) {
+        throw new BadRequestException('Book Not Found');
+      }
+
+      if (book.availableCopies <= 0) {
+        throw new BadRequestException('Book Not Available');
+      }
+
       const borrowedRecordOrError = BorrowedRecordDomain.create(dto);
 
       if (borrowedRecordOrError.isFailure) {
@@ -22,9 +35,15 @@ export class BorrowedRecordService {
 
       const borrowedRecordDomain = borrowedRecordOrError.getValue();
 
-      const book = BorrowedRecordMapper.toPersistence(borrowedRecordDomain);
+      const borrowedRecord =
+        BorrowedRecordMapper.toPersistence(borrowedRecordDomain);
 
-      const res = await this.borrowedRecordRepository.save(book);
+      const res = await this.borrowedRecordRepository.save(borrowedRecord);
+
+      await this.bookService.updateBook(dto.bookId, {
+        availableCopies: book.availableCopies - 1,
+      } as UpdateBookDto);
+      
       return res;
     } catch (error) {
       handleErrorCatch(error, 'Create Borrowed Record');

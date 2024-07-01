@@ -1,10 +1,6 @@
-import { IsString, IsUUID, MinLength, IsDateString, IsOptional } from "class-validator";
+import { IsString, MinLength, IsDateString, IsOptional } from "class-validator";
 
 export class UpdateBorrowedRecordDto{
-    @IsUUID()
-    @IsOptional()
-    bookId: string;
-
     @IsString()
     @MinLength(3)
     @IsOptional()

@@ -4,6 +4,7 @@ import { BorrowedRecordRepository } from "./repository/borrowed-record.repositor
 import { BorrowedRecords } from "./models/borrowed-record.model";
 import { BorrowedRecordService } from "./services/borrowed-record.service";
 import { BorrowedRecordController } from "./controllers/borrowed-record.controller";
+import { BookModule } from "../book/book.module";
 
 const infrastructure = [
   {
@@ -15,7 +16,7 @@ const infrastructure = [
 ];
 
 @Module({
-  imports: [],
+  imports: [BookModule],
   controllers: [BorrowedRecordController],
   providers: [Logger, ...infrastructure, BorrowedRecordService],
 })
