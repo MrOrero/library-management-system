@@ -54,13 +54,18 @@ $ npm run test:e2e
 
 # REST API
 
-The REST API to the _Bank Management API_ is described below.
 
 The base URL is
 
     http://localhost:4500
+ 
+Credentials
+
+    username: admin
+    password: admin
 
 ## Swagger documentation
 
     http://{base_url}/api-docs
+
 
