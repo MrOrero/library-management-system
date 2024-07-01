@@ -12,6 +12,7 @@ async function bootstrap() {
   .setTitle('Books Management API')
   .setDescription('A simple API that performs CRUD operations on books')
   .setVersion('1.0')
+  .addBearerAuth()
   .build();
 
   const document = SwaggerModule.createDocument(app, options);

@@ -6,6 +6,7 @@ import { DatabaseModule } from './libs/db/DatabaseModule';
 import { AuthorModule } from './modules/author/author.module';
 import { BookModule } from './modules/book/book.module';
 import { BorrowedRecordModule } from './modules/borrowed-record/borrowed-record.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { BorrowedRecordModule } from './modules/borrowed-record/borrowed-record.
     DatabaseModule,
     AuthorModule,
     BookModule,
-    BorrowedRecordModule
+    BorrowedRecordModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

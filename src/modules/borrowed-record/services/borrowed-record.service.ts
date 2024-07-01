@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectionTokens, PaginatedQuery } from '../../../libs/constants';
-import { handleErrorCatch } from '../../../libs/domain/utils/helper';
+import { handleErrorCatch } from '../../../libs/common/utils/helper';
 import { BorrowedRecordRepository } from '../repository/borrowed-record.repository';
 import { AddBorrowedRecordDto } from '../dto/AddBorrowedRecord.dto';
 import { BorrowedRecordDomain } from '../domain/borrowed-record.domain';

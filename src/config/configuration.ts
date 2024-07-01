@@ -1,9 +1,7 @@
 import { Logger } from "@nestjs/common";
 import {
   IsBoolean,
-  IsEmail,
   IsInt,
-  IsOptional,
   IsString,
   validateSync,
 } from "class-validator";
@@ -35,8 +33,17 @@ class Configuration {
   @IsBoolean()
   readonly DATABASE_SYNC = process.env.DATABASE_SYNC === "true";
 
+  @IsString()
+  readonly ADMIN_PASSWORD = process.env.ADMIN_PASSWORD as string;
+
+  @IsString()
+  readonly ADMIN_USERNAME = process.env.ADMIN_USERNAME as string;
+
   @IsInt()
   readonly PORT = Number(process.env.PORT);
+
+  @IsString()
+  readonly SECRET_KEY = process.env.SECRET_KEY as string;
 
 
   constructor() {

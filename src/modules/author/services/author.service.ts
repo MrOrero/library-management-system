@@ -4,7 +4,7 @@ import { AuthorRepository } from '../repository/author.repository';
 import { CreateAuthorDto } from '../dto/CreateAuthor.dto';
 import { AuthorDomain } from '../domain/author.domain';
 import { AuthorMapper } from '../mappers/author.mapper';
-import { handleErrorCatch } from '../../../libs/domain/utils/helper';
+import { handleErrorCatch } from '../../../libs/common/utils/helper';
 import { UpdateAuthorDto } from '../dto/UpdateAuthor.dto';
 
 @Injectable()

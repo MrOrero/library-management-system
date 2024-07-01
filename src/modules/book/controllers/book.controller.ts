@@ -7,18 +7,22 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { PaginatedQuery, PaginatedQueryDoc } from '../../../libs/constants';
 import { BookService } from '../services/book.service';
 import { AddBookDto } from '../dto/AddBook.dto';
 import { UpdateBookDto } from '../dto/UpdateBook.dto';
-import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../../../libs/common/guards/auth.guard';
 
 @ApiTags('Books')
 @Controller('books')
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Book' })
   @Post('/')
   async createBook(@Body() addBookDto: AddBookDto) {
@@ -41,6 +45,8 @@ export class BookController {
     return res;
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Book' })
   @Put('/:id')
   async updateBook(@Param('id') id: string, @Body() addBookDto: UpdateBookDto) {
@@ -48,6 +54,8 @@ export class BookController {
     return res;
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete Book' })
   @Delete('/:id')
   async deleteBook(@Param('id') id: string) {

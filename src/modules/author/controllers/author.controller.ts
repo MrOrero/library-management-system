@@ -7,22 +7,27 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthorService } from '../services/author.service';
 import { CreateAuthorDto } from '../dto/CreateAuthor.dto';
 import { PaginatedQuery, PaginatedQueryDoc } from '../../../libs/constants';
 import { UpdateAuthorDto } from '../dto/UpdateAuthor.dto';
 import {
+  ApiBearerAuth,
   ApiOperation,
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
+import { AuthGuard } from 'src/libs/common/guards/auth.guard';
 
 @ApiTags('Authors')
 @Controller('authors')
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create Author' })
   @Post('/')
   async createAuthor(@Body() authorDto: CreateAuthorDto) {
@@ -45,6 +50,8 @@ export class AuthorController {
     return res;
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update Author' })
   @Put('/:id')
   async updateAuthor(
@@ -55,6 +62,8 @@ export class AuthorController {
     return res;
   }
 
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete Author' })
   @Delete('/:id')
   async deleteAuthor(@Param('id') id: string) {
