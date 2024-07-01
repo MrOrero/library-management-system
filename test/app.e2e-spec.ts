@@ -8,8 +8,10 @@ import { AddBookDto } from 'src/modules/book/dto/AddBook.dto';
 import { UpdateBookDto } from 'src/modules/book/dto/UpdateBook.dto';
 import { AddBorrowedRecordDto } from 'src/modules/borrowed-record/dto/AddBorrowedRecord.dto';
 import { UpdateBorrowedRecordDto } from 'src/modules/borrowed-record/dto/UpdateBorrowedRecord.dto';
+import { Config } from '../src/config'
 
 const nonExistentId = '123';
+let authToken: string;
 
 const createAuthorDto: CreateAuthorDto = {
   name: 'John Doe',
@@ -28,6 +30,12 @@ describe('AuthorController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
+
+    const response = await request(app.getHttpServer())
+    .post('/auth/login')
+    .send({ username: Config.ADMIN_USERNAME, password: Config.ADMIN_PASSWORD });
+    
+    authToken = response.body.token; 
   });
 
   afterAll(async () => {
@@ -46,6 +54,7 @@ describe('AuthorController (e2e)', () => {
     it('should create an author', () => {
       return request(app.getHttpServer())
         .post('/authors')
+        .set('Authorization', `Bearer ${authToken}`)
         .send(createAuthorDto)
         .expect(201)
         .expect((response) => {
@@ -63,6 +72,7 @@ describe('AuthorController (e2e)', () => {
     it('should return 400 if property is invalid', () => {
       return request(app.getHttpServer())
         .post('/authors')
+        .set('Authorization', `Bearer ${authToken}`)
         .send({ ...createAuthorDto, name: '' })
         .expect(400);
     });
@@ -129,6 +139,7 @@ describe('AuthorController (e2e)', () => {
     it('should update an author', () => {
       request(app.getHttpServer())
         .put(`/authors/${authorId}`)
+        .set('Authorization', `Bearer ${authToken}`)
         .send(updateAuthorDto)
         .expect(200)
         .expect((res) => {
@@ -141,6 +152,7 @@ describe('AuthorController (e2e)', () => {
     it('should return 404 if author does not exist', () => {
       return request(app.getHttpServer())
         .put(`/authors/${nonExistentId}`)
+        .set('Authorization', `Bearer ${authToken}`)
         .send(updateAuthorDto)
         .expect(404);
     });
@@ -150,6 +162,7 @@ describe('AuthorController (e2e)', () => {
     it('should delete an author', () => {
       return request(app.getHttpServer())
         .delete(`/authors/${authorId}`)
+        .set('Authorization', `Bearer ${authToken}`)
         .expect(200)
         .expect((res) => {
           expect(res.body).toHaveProperty('status', true);
@@ -159,6 +172,7 @@ describe('AuthorController (e2e)', () => {
     it('should return 404 if author does not exist', () => {
       return request(app.getHttpServer())
         .delete(`/authors/${nonExistentId}`)
+        .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
   });
@@ -195,7 +209,7 @@ describe('BookController (e2e)', () => {
   });
 
   afterAll(async () => {
-    request(app.getHttpServer()).delete(`/authors/${authorId}`).end();
+    request(app.getHttpServer()).delete(`/authors/${authorId}`).set('Authorization', `Bearer ${authToken}`).end();
     await app.close();
   });
 
@@ -204,6 +218,7 @@ describe('BookController (e2e)', () => {
   it('should create an author', () => {
     return request(app.getHttpServer())
       .post('/authors')
+      .set('Authorization', `Bearer ${authToken}`)
       .send(createAuthorDto)
       .expect(201)
       .expect((response) => {
@@ -217,6 +232,7 @@ describe('BookController (e2e)', () => {
     it('should create a book', () => {
       return request(app.getHttpServer())
         .post('/books')
+        .set('Authorization', `Bearer ${authToken}`)
         .send(createBookDto)
         .expect(201)
         .expect((res) => {
@@ -239,6 +255,7 @@ describe('BookController (e2e)', () => {
     it('should return 400 if property is invalid', () => {
       return request(app.getHttpServer())
         .post('/books')
+        .set('Authorization', `Bearer ${authToken}`)
         .send({ ...createBookDto, publishedYear: '8932' })
         .expect(400);
     });
@@ -310,6 +327,7 @@ describe('BookController (e2e)', () => {
     it('should update a book', () => {
       request(app.getHttpServer())
         .put(`/books/${bookId}`)
+        .set('Authorization', `Bearer ${authToken}`)
         .send(updateBookDto)
         .expect(200)
         .expect((res) => {
@@ -330,6 +348,7 @@ describe('BookController (e2e)', () => {
     it('should return 404 if book does not exist', () => {
       return request(app.getHttpServer())
         .put(`/books/${nonExistentId}`)
+        .set('Authorization', `Bearer ${authToken}`)
         .send(updateBookDto)
         .expect(404);
     });
@@ -339,6 +358,7 @@ describe('BookController (e2e)', () => {
     it('should delete a book', () => {
       return request(app.getHttpServer())
         .delete(`/books/${bookId}`)
+        .set('Authorization', `Bearer ${authToken}`)
         .expect(200)
         .expect((res) => {
           expect(res.body).toHaveProperty('status', true);
@@ -348,6 +368,7 @@ describe('BookController (e2e)', () => {
     it('should return 404 if book does not exist', () => {
       return request(app.getHttpServer())
         .delete(`/books/${nonExistentId}`)
+        .set('Authorization', `Bearer ${authToken}`)
         .expect(404);
     });
   });
@@ -391,8 +412,8 @@ describe('BorrowedRecordController (e2e)', () => {
   });
 
   afterAll(async () => {
-    request(app.getHttpServer()).delete(`/authors/${authorId}`).end();
-    request(app.getHttpServer()).delete(`/books/${bookId}`).end();
+    request(app.getHttpServer()).delete(`/authors/${authorId}`).set('Authorization', `Bearer ${authToken}`).end();
+    request(app.getHttpServer()).delete(`/books/${bookId}`).set('Authorization', `Bearer ${authToken}`).end();
     await app.close();
   });
 
@@ -400,6 +421,7 @@ describe('BorrowedRecordController (e2e)', () => {
   it('should create an author', () => {
     return request(app.getHttpServer())
       .post('/authors')
+      .set('Authorization', `Bearer ${authToken}`)
       .send(createAuthorDto)
       .expect(201)
       .expect((response) => {
@@ -411,6 +433,7 @@ describe('BorrowedRecordController (e2e)', () => {
   it('should create a book', () => {
     return request(app.getHttpServer())
       .post('/books')
+      .set('Authorization', `Bearer ${authToken}`)
       .send(createBookDto)
       .expect(201)
       .expect((res) => {
@@ -423,6 +446,7 @@ describe('BorrowedRecordController (e2e)', () => {
     it('should create a borrow record', () => {
       return request(app.getHttpServer())
         .post('/borrow-records')
+        .set('Authorization', `Bearer ${authToken}`)
         .send(addBorrowedRecordDto)
         .expect(201)
         .expect((res) => {
@@ -435,6 +459,7 @@ describe('BorrowedRecordController (e2e)', () => {
     it('should return 400 if property is invalid', () => {
       return request(app.getHttpServer())
         .post('/borrow-records')
+        .set('Authorization', `Bearer ${authToken}`)
         .send({ ...addBorrowedRecordDto, returnDate : 'chocolate' })
         .expect(400);
     });
@@ -467,6 +492,7 @@ describe('BorrowedRecordController (e2e)', () => {
       it('should update a borrow record', () => {
         request(app.getHttpServer())
           .put(`/borrow-records/${borrowedRecordId}`)
+          .set('Authorization', `Bearer ${authToken}`)
           .send(updateBorrowedRecordDto)
           .expect(200)
           .expect((res) => {
@@ -482,6 +508,7 @@ describe('BorrowedRecordController (e2e)', () => {
       it('should return 404 if borrow record does not exist', () => {
         return request(app.getHttpServer())
           .put(`/borrow-records/${nonExistentId}`)
+          .set('Authorization', `Bearer ${authToken}`)
           .send(updateBorrowedRecordDto)
           .expect(404);
       });
@@ -491,6 +518,7 @@ describe('BorrowedRecordController (e2e)', () => {
       it('should delete a borrow record', () => {
         return request(app.getHttpServer())
           .delete(`/borrow-records/${borrowedRecordId}`)
+          .set('Authorization', `Bearer ${authToken}`)
           .expect(200)
           .expect((res) => {
             expect(res.body).toHaveProperty('status', true);
@@ -500,6 +528,7 @@ describe('BorrowedRecordController (e2e)', () => {
       it('should return 404 if borrow record does not exist', () => {
         return request(app.getHttpServer())
           .delete(`/borrow-records/${borrowedRecordId}`)
+          .set('Authorization', `Bearer ${authToken}`)
           .expect(404);
       });
     });

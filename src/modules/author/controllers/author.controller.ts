@@ -19,7 +19,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthGuard } from 'src/libs/common/guards/auth.guard';
+import { AuthGuard } from '../../../libs/common/guards/auth.guard';
 
 @ApiTags('Authors')
 @Controller('authors')

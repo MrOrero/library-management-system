@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken'
-import { Config } from 'src/config';
+import { Config } from '../../../config';
 import { LoginRequestDTO } from '../dto/LoginRequest.dto';
 
 @Injectable()
