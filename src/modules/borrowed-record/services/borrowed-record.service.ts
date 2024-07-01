@@ -24,7 +24,7 @@ export class BorrowedRecordService {
       }
 
       if (book.availableCopies <= 0) {
-        throw new BadRequestException('Book Not Available');
+        throw new BadRequestException('Book Out of Stock');
       }
 
       const borrowedRecordOrError = BorrowedRecordDomain.create(dto);
@@ -43,7 +43,7 @@ export class BorrowedRecordService {
       await this.bookService.updateBook(dto.bookId, {
         availableCopies: book.availableCopies - 1,
       } as UpdateBookDto);
-      
+
       return res;
     } catch (error) {
       handleErrorCatch(error, 'Create Borrowed Record');
