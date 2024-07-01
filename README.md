@@ -10,7 +10,7 @@ This api was developed using
 - NestJs
 - TypeScript
 - PostgreSQL
-- TyoeORM
+- TypeORM
 
 ## Getting Started
 
