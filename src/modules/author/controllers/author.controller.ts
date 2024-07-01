@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthorService } from '../services/author.service';
 import { CreateAuthorDto } from '../dto/CreateAuthor.dto';
-import { PaginatedQuery, PaginatedQueryDoc } from 'src/libs/constants';
+import { PaginatedQuery, PaginatedQueryDoc } from '../../../libs/constants';
 import { UpdateAuthorDto } from '../dto/UpdateAuthor.dto';
 import {
   ApiOperation,

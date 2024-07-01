@@ -1,5 +1,5 @@
 import { Logger, Module } from "@nestjs/common";
-import { InjectionTokens } from "src/libs/constants";
+import { InjectionTokens } from "../../libs/constants";
 import { BorrowedRecordRepository } from "./repository/borrowed-record.repository";
 import { BorrowedRecords } from "./models/borrowed-record.model";
 import { BorrowedRecordService } from "./services/borrowed-record.service";

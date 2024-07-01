@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsUUID, IsNumber, IsPositive } from "class-validator";
-import { IsValidYear } from "src/libs/validation/isValidYear";
+import { IsValidYear } from "../../../libs/validation/isValidYear";
 
 export class AddBookDto{
     @IsString()

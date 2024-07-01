@@ -1,5 +1,5 @@
 import { Logger, Module } from "@nestjs/common";
-import { InjectionTokens } from "src/libs/constants";
+import { InjectionTokens } from "../../libs/constants";
 import { BookRepository } from "./repository/book.repository";
 import { Books } from "./models/book.model";
 import { BookService } from "./services/book.service";

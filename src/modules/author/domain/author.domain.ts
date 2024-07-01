@@ -1,7 +1,7 @@
-import { BaseAggregateRoot } from "src/libs/domain/BaseAggregateRoot";
-import { UniqueEntityID } from "src/libs/domain/UniqueEntityID";
-import { Guard } from "src/libs/domain/logic/Guard";
-import { Result } from "src/libs/domain/logic/Result";
+import { BaseAggregateRoot } from "../../../libs/domain/BaseAggregateRoot";
+import { UniqueEntityID } from "../../../libs/domain/UniqueEntityID";
+import { Guard } from "../../../libs/domain/logic/Guard";
+import { Result } from "../../../libs/domain/logic/Result";
 import { CreateAuthorDto } from "../dto/CreateAuthor.dto";
 
 interface AuthorProps {

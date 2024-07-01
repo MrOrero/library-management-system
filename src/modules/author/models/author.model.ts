@@ -1,5 +1,5 @@
-import { BaseEntity } from 'src/libs/db/BaseEntity';
-import { Books } from 'src/modules/book/models/book.model';
+import { BaseEntity } from '../../../libs/db/BaseEntity';
+import { Books } from '../../../modules/book/models/book.model';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()

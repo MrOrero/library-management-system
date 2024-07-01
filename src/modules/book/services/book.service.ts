@@ -1,6 +1,6 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { InjectionTokens, PaginatedQuery } from 'src/libs/constants';
-import { handleErrorCatch } from 'src/libs/domain/utils/helper';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectionTokens, PaginatedQuery } from '../../../libs/constants';
+import { handleErrorCatch } from '../../../libs/domain/utils/helper';
 import { BookRepository } from '../repository/book.repository';
 import { AddBookDto } from '../dto/AddBook.dto';
 import { BookDomain } from '../domain/book.domain';
@@ -43,7 +43,7 @@ export class BookService {
     try {
       const bookExists = await this.bookRepository.exists({ id });
       if (!bookExists) {
-        throw new BadRequestException('Book Not Found');
+        throw new NotFoundException('Book Not Found');
       }
 
       return this.bookRepository.findOne({ id }, {
@@ -59,7 +59,7 @@ export class BookService {
       const bookExists = await this.bookRepository.exists({ id });
 
       if (!bookExists) {
-        throw new BadRequestException('Book Not Found');
+        throw new NotFoundException('Book Not Found');
       }
 
       return this.bookRepository.findOneAndUpdate(
@@ -78,7 +78,7 @@ export class BookService {
       const bookExists = await this.bookRepository.exists({ id });
 
       if (!bookExists) {
-        throw new BadRequestException('Book Not Found');
+        throw new NotFoundException('Book Not Found');
       }
       return this.bookRepository.findOneAndDelete({ id });
     } catch (error) {

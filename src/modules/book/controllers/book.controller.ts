@@ -8,7 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { PaginatedQuery, PaginatedQueryDoc } from 'src/libs/constants';
+import { PaginatedQuery, PaginatedQueryDoc } from '../../../libs/constants';
 import { BookService } from '../services/book.service';
 import { AddBookDto } from '../dto/AddBook.dto';
 import { UpdateBookDto } from '../dto/UpdateBook.dto';

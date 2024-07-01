@@ -1,13 +1,13 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { InjectionTokens, PaginatedQuery } from 'src/libs/constants';
-import { handleErrorCatch } from 'src/libs/domain/utils/helper';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectionTokens, PaginatedQuery } from '../../../libs/constants';
+import { handleErrorCatch } from '../../../libs/domain/utils/helper';
 import { BorrowedRecordRepository } from '../repository/borrowed-record.repository';
 import { AddBorrowedRecordDto } from '../dto/AddBorrowedRecord.dto';
 import { BorrowedRecordDomain } from '../domain/borrowed-record.domain';
 import { BorrowedRecordMapper } from '../mappers/BorrowedRecordMapper';
 import { UpdateBorrowedRecordDto } from '../dto/UpdateBorrowedRecord.dto';
-import { BookService } from 'src/modules/book/services/book.service';
-import { UpdateBookDto } from 'src/modules/book/dto/UpdateBook.dto';
+import { BookService } from '../../../modules/book/services/book.service';
+import { UpdateBookDto } from '../../../modules/book/dto/UpdateBook.dto';
 
 @Injectable()
 export class BorrowedRecordService {
@@ -65,7 +65,7 @@ export class BorrowedRecordService {
       });
 
       if (!borrowedRecordExists) {
-        throw new BadRequestException('Borrowed Record Not Found');
+        throw new NotFoundException('Borrowed Record Not Found');
       }
 
       return this.borrowedRecordRepository.findOneAndUpdate(
@@ -86,7 +86,7 @@ export class BorrowedRecordService {
       });
 
       if (!borrowedRecordExists) {
-        throw new BadRequestException('Borrowed Record Not Found');
+        throw new NotFoundException('Borrowed Record Not Found');
       }
       return this.borrowedRecordRepository.findOneAndDelete({ id });
     } catch (error) {

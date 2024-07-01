@@ -1,10 +1,10 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { InjectionTokens, PaginatedQuery } from 'src/libs/constants';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectionTokens, PaginatedQuery } from '../../../libs/constants';
 import { AuthorRepository } from '../repository/author.repository';
 import { CreateAuthorDto } from '../dto/CreateAuthor.dto';
 import { AuthorDomain } from '../domain/author.domain';
 import { AuthorMapper } from '../mappers/author.mapper';
-import { handleErrorCatch } from 'src/libs/domain/utils/helper';
+import { handleErrorCatch } from '../../../libs/domain/utils/helper';
 import { UpdateAuthorDto } from '../dto/UpdateAuthor.dto';
 
 @Injectable()
@@ -44,7 +44,7 @@ export class AuthorService {
       const authorExists = await this.authorRepository.exists({ id });
 
       if (!authorExists) {
-        throw new BadRequestException('Author Not Found');
+        throw new NotFoundException('Author Not Found');
       }
 
       return this.authorRepository.findOne({ id }, {books: true});
@@ -58,7 +58,7 @@ export class AuthorService {
       const authorExists = await this.authorRepository.exists({ id });
 
       if (!authorExists) {
-        throw new BadRequestException('Author Not Found');
+        throw new NotFoundException('Author Not Found');
       }
 
       return this.authorRepository.findOneAndUpdate(
@@ -77,7 +77,7 @@ export class AuthorService {
       const authorExists = await this.authorRepository.exists({ id });
 
       if (!authorExists) {
-        throw new BadRequestException('Author Not Found');
+        throw new NotFoundException('Author Not Found');
       }
       return this.authorRepository.findOneAndDelete({ id });
     } catch (error) {

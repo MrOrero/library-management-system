@@ -1,4 +1,4 @@
-import { BaseEntity } from 'src/libs/db/BaseEntity';
+import { BaseEntity } from '../../../libs/db/BaseEntity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Books } from '../../book/models/book.model';
 

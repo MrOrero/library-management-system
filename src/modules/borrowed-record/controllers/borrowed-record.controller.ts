@@ -8,7 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { PaginatedQuery, PaginatedQueryDoc } from 'src/libs/constants';
+import { PaginatedQuery, PaginatedQueryDoc } from '../../../libs/constants';
 import { BorrowedRecordService } from '../services/borrowed-record.service';
 import { AddBorrowedRecordDto } from '../dto/AddBorrowedRecord.dto';
 import { UpdateBorrowedRecordDto } from '../dto/UpdateBorrowedRecord.dto';

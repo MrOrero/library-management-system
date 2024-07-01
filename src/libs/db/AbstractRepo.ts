@@ -107,8 +107,8 @@ export abstract class AbstractRepo<T extends BaseEntity> {
       data,
       pagination: {
         total,
-        size,
-        page,
+        size: +size,
+        page: +page,
       },
     };
   }
